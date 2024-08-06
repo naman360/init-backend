@@ -1,20 +1,30 @@
 const http = require("http");
-const fs = require("fs");
-const url = require("url");
 
+const express = require("express");
+const app = express();
 const PORT = process.env.PORT || 8000;
 
-const server = http.createServer((req, res) => {
+app.get("/", (req, res) => {
+  res.end("Homepage");
+});
+
+app.get("/contact-us", (req, res) => {
+  res.end("Contact Us");
+});
+
+app.get("/about", (req, res) => {
+  res.end(`Hi ${req.query.name}`);
+});
+
+/* const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
 
   const logs = `${Date.now()}: ${parsedUrl.path} Req received\n`;
   fs.appendFile("./src/assets/log.txt", logs, (err, data) => {
     switch (parsedUrl.pathname) {
       case "/":
-        res.end("Homepage");
         break;
       case "/contact-us":
-        res.end("Contact Us");
         break;
       case "/about":
         const username = parsedUrl.query.username;
@@ -25,6 +35,6 @@ const server = http.createServer((req, res) => {
         break;
     }
   });
-});
+}); */
 
-server.listen(PORT, () => console.log(`Listening on localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Listening on localhost:${PORT}`));
